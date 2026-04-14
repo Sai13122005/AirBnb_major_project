@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust</title>
+</head>
+<body>
+        <h2>Listing Details:-</h2>
+        <ul>
+            <img src="<%=data.image.url%>" width="300px">
+            <li>Title: <%= data.title%></li>
+            <li>Description:<%=data.description%></li>
+            <li>Price: &#8377; <%=data.price.toLocaleString("en-IN")%></li>
+            <li>Location: <%= data.location %></li>
+            <li>Country: <%= data.country%></li>
+        </ul>
+</body>
+</html>
