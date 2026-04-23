@@ -1,19 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanderlust</title>
-</head>
+<% layout("/layouts/boilerplate") %>
 <body>
-        <h2>Listing Details:-</h2>
+    <h2>Listing Details:-</h2>
         <ul>
-            <img src="<%=data.image.url%>" width="300px">
+            <img src="<%=data.image.url%>" width="400px">
             <li>Title: <%= data.title%></li>
             <li>Description:<%=data.description%></li>
-            <li>Price: &#8377; <%=data.price.toLocaleString("en-IN")%></li>
+            <% const price = data.price != null ? Number(data.price) : null; %>
+            <li>Price: <%= price !== null && !Number.isNaN(price) ? `₹ ${price.toLocaleString("en-IN")}` : "Price not available" %></li>
             <li>Location: <%= data.location %></li>
             <li>Country: <%= data.country%></li>
         </ul>
+        <form action="/listings/<%= data._id%>/edit" style="display: inline;">
+            <button style="margin-left: 20px;">Edit</button>
+        </form>
+         <form method="POST" action="/listings/<%=data._id%>?_method=DELETE">
+            <br><button>delete</button>
+        </form>
 </body>
-</html>
