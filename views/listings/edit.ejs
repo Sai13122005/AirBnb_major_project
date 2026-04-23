@@ -3,20 +3,31 @@
 
         <h2>You can Edit Now</h2>
         <form method="POST" action="/listings/<%= data._id %>?_method=PUT">
-            Image: <input type="text" name="listing[image]" value="<%= data.image.url %>">
+            <div class="md-3">
+                <label for="image" class="form-label">Image</label>
+                <input class="form-control" type="text" name="listing[image]" value="<%= data.image.url%>" placeholder="Enter Image URL">
+            </div>
+            <div class="md-3">
+                <label for="title" class="form-label">Title</label>
+                <input class="form-control" type="text" name="listing[title]" value="<%= data.title %>" placeholder="Enter Title">
+            </div>
+             <div class="md-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" name="listing[description]" placeholder="Enter Description"><%= data.description %></textarea>
+            </div>
+            <div class="md-3">
+                <label for="price" class="form-label">Price</label>
+                <input class="form-control" type="number" name="listing[price]" value="<%= data.price %>" placeholder="Enter Price">
+            </div>
+           <div class="md-3">
+                <label for="location" class="form-label">Location</label>
+                <input class="form-control" type="text" name="listing[location]" value="<%= data.location %>" placeholder="Enter location">
+            </div>
+            <div class="md-3">
+                <label for="country" class="form-label">Country</label>
+                <input class="form-control" type="text" name="listing[country]" value="<%= data.country %>" placeholder="Enter country">
+            </div>
             <br>
-            Title: <input type="text" name="listing[title]" value="<%= data.title %>">
-            <br>
-            Description:- <br>
-            <textarea name="listing[description]"><%= data.description %></textarea>
-            <br>
-            Price: <input type="number" name="listing[price]" value="<%= data.price %>">
-            <br>
-            Location: <input type="text" name="listing[location]" value="<%= data.location %>">
-            <br>
-            Country: <input type="text" name="listing[country]" value="<%= data.country %>">
-            <br>
-            <br>
-            <button>Update</button>
+            <button class="btn btn-success">Update</button>
         </form>
 </body>

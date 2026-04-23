@@ -11,9 +11,9 @@
             <li>Country: <%= data.country%></li>
         </ul>
         <form action="/listings/<%= data._id%>/edit" style="display: inline;">
-            <button style="margin-left: 20px;">Edit</button>
+            <button class="btn btn-secondary">Edit</button>
         </form>
          <form method="POST" action="/listings/<%=data._id%>?_method=DELETE">
-            <br><button>delete</button>
+            <br><button class="btn btn-danger">delete</button>
         </form>
 </body>
