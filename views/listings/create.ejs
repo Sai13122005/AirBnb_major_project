@@ -1,32 +1,49 @@
 <% layout("/layouts/boilerplate") %>
-<body>
-    <h2>Enter your place Details</h2>
-    <form action="/listings" method="post">
-        <div class="md-3">
-            <label for="title" class="form-label">Title</label>
-            <input class="form-control" type="text" name="listing[title]" placeholder="Enter place title">
-        </div>
-        <div class="md-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" name="listing[description]" placeholder="Enter place description"></textarea>
-        </div>
-        <div class="md-3">
-            <label for="price" class="form-label">Price</label>
-            <input class="form-control" type="number" name="listing[price]" placeholder="Enter place price">
-        </div>
-        <div class="md-3">
-            <label for="image" class="form-label">Image</label>
-            <input class="form-control" type="text" name="listing[image]" placeholder="Enter image url">    
-        </div>
-        <div class="md-3">
-            <label for="location" class="form-label">Location</label>
-            <input class="form-control" type="text" name="listing[location]" placeholder="Enter location">
-        </div>
-        <div class="md-3">
-            <label for="country" class="form-label">Country</label>
-            <input class="form-control" type="text" name="listing[country]" placeholder="Enter country">
-        </div>
-        <br>
-        <button type="submit" class="btn btn-dark">add</button>
-    </form>
-</body>
+
+    <body>
+        <% var listing=typeof listing !=='undefined' ? listing : {} %>
+            <h2>Enter your place Details</h2>
+            <% if (typeof error !=='undefined' ) { %>
+                <div class="alert alert-danger">Please fix the highlighted fields and try again.</div>
+                <% } %>
+                    <form action="/listings" method="post" novalidate class="needs-validation">
+                        <div class="md-3 mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input id="title" required class="form-control" type="text" name="listing[title]"
+                                placeholder="Enter place title" value="<%= listing.title || '' %>">
+                            <div class="invalid-feedback">Title is required.</div>
+                        </div>
+                        <div class="md-3 mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea id="description" required class="form-control" name="listing[description]"
+                                placeholder="Enter place description"><%= listing.description || '' %></textarea>
+                            <div class="invalid-feedback">Description is required.</div>
+                        </div>
+                        <div class="md-3 mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input id="price" required class="form-control" min="0" name="listing[price]"
+                                placeholder="Enter place price" value="<%= listing.price || '' %>">
+                            <div class="invalid-feedback">Price is required.</div>
+                        </div>
+                        <div class="md-3 mb-3">
+                            <label for="image" class="form-label">Image</label>
+                            <input id="image" class="form-control" type="text" name="listing[image]"
+                                placeholder="Enter image url" value="<%= listing.image || '' %>">
+                            <div class="form-text">Optional</div>
+                        </div>
+                        <div class="md-3 mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <input id="location" required class="form-control" type="text" name="listing[location]"
+                                placeholder="Enter location" value="<%= listing.location || '' %>">
+                            <div class="invalid-feedback">Location is required.</div>
+                        </div>
+                        <div class="md-3 mb-3">
+                            <label for="country" class="form-label">Country</label>
+                            <input id="country" required class="form-control" type="text" name="listing[country]"
+                                placeholder="Enter country" value="<%= listing.country || '' %>">
+                            <div class="invalid-feedback">Country is required.</div>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-dark">add</button>
+                    </form>
+    </body>

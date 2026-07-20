@@ -8,3 +8,7 @@ Key Uses and Functions
 
 Why use it instead of standard EJS?
 While standard EJS supports basic "includes," ejs-mate provides a more powerful "top-down" approach. Instead of including a header and footer in every file, you tell your view to use a specific layout, and ejs-mate handles the assembly. This makes your project structure much cleaner and easier to maintain as it grows. 
+
+
+
+
