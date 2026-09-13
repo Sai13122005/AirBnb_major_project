@@ -8,7 +8,8 @@ const path = require("path");
 const engine = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const {listingSchema}= require("./schema.js");
+const {listingSchema, ReviewSchema}= require("./schema.js");
+const Reviews = require("./models/reviews");
 app.engine("ejs", engine);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -40,6 +41,17 @@ app.listen(8080, () => {
 //we can write schemaValidation as a middleware
 const validateListing = (req, res, next)=>{
     let {error} = listingSchema.validate(req.body);
+    console.log(error);
+    if(error)
+    {
+        throw new ExpressError(400, error);
+    }
+    else{
+        next();
+    }
+}
+const validateReview = (req, res, next)=>{
+    let {error} = ReviewSchema.validate(req.body);
     console.log(error);
     if(error)
     {
@@ -115,11 +127,26 @@ app.get("/", (req, res) => {
 
 //show route
 app.get("/listings/:id", wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    const data = await Listing.findById(id);
+    const data = await Listing.findById(req.params.id).populate("reviews");
     res.render("listings/show.ejs", { data });
 }));
-
+// adding Reviews
+app.post("/listings/:id/reviews",validateReview, wrapAsync(async(req, res)=>{
+    let {id} = req.params;
+    let listing = await Listing.findById(id);
+    let newReview = new Reviews(req.body.review);
+    listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+    res.redirect(`/listings/${id}`);
+}));
+//delete review
+app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async(req, res)=>{
+    let {id, reviewId} = req.params;
+    await Listing.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
+    await Reviews.findByIdAndDelete(reviewId);
+    res.redirect(`/listings/${id}`);
+}))
 //Edit Route
 
 app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
